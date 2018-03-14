@@ -1,0 +1,155 @@
+
+package administrator;
+ 
+import java.util.Scanner;
+import java.util.*;
+import java.io.PrintWriter;
+import java.lang.Object;
+
+
+public class Administrator {
+    public Administrator(){
+    }
+    private static int n = 200;//placeholder for all of the users, max amount can be easily changed.
+    Student[] students = new Student[n];
+    Parent[] parents = new Parents[n];
+    Teacher[] teachers = new Teachers[n];
+    int si = 0;
+    int pi = 0;
+    int ti = 0;
+    
+    
+    public static void main(String[] args) {
+        // TODO code application logic here
+    }
+    
+    boolean addAccount(String ID, String Type, String firstname, String lastname){
+ 
+        Student[] students = new Student[n];
+        Parent[] parents = new Parents[n];
+        Teacher[] teachers = new Teachers[n];
+        int si = 0;
+        int pi = 0;
+        int ti = 0;
+        
+        User newUser = new User(ID, Type, firstname, lastname);
+        switch(newUser.Type){
+            case STUDENT:
+                Student newStudent = new Student();
+                newStudent = (Student)newUser;
+                System.out.println("What school year are you in?");//This can be a JFrame popup or whatever
+                Scanner scan = new Scanner(System.in);
+                newStudent.YearofSchool = scan.nextInt();
+                students[si] = newStudent; si++;
+                
+                break;
+            case TEACHER:
+                Teacher newTeacher = new Teacher();
+                newTeacher = (Teacher)newUser;
+                System.out.println("What subject do you teach?");//This can be a JFrame popup or whatever
+                scan = null;
+                newTeacher.Subject = scan.nextLine();
+                teachers[ti] = newTeacher;ti++;
+                break;
+            case PARENT:
+                Parent newParent = new Parent();
+                newParent = (Parent)newUser;
+                System.out.println("What is your childs ID number?");//This can be a JFrame popup or whatever
+                scan = null;
+                String childID = scan.nextLine();
+                for(int i=0; i<=students.length;i++){
+                    if(students[i].ID = childID){
+                        linkAccounts(newParent.ID,childID);
+                    }
+                }
+                parents[pi] = newParent;pi++;
+                break;
+        }
+        return true;
+
+}
+
+    
+    
+    
+    void removeAccount(String ID, String Type){//if successful a message will be printed, otherwise there is a fault
+        int i = 0;
+        switch (Type){
+            case STUDENT:
+                while(!students[i-1].equals(null)){
+                    if(students[i].ID.equals(ID)){
+                        System.out.println("User found and deleted");
+                        students[i] = null;
+                        Student placeholder = new Student();
+                        while(!students[i+1].equals(null)){//This while loop shifts the empty element to the end of the array
+                            placeholder = students[i];
+                            students[i] = students[i+1];
+                            students[i+1] = placeholder;
+                            i++;
+                        }
+                    }else{
+                        i++;
+                    }
+                    
+                }//if id not found nothing happens
+                break;
+                
+            case TEACHER:
+                while(!teachers[i-1].equals(null)){
+                    if(teachers[i].ID.equals(ID)){
+                        System.out.println("User found and deleted");
+                        teachers[i] = null;
+                        Teacher placeholder = new Teacher();
+                        while(!teachers[i+1].equals(null)){//This while loop shifts the empty element to the end of the array
+                            placeholder = teachers[i];
+                            teachers[i] = teachers[i+1];
+                            teachers[i+1] = placeholder;
+                            i++;
+                        }
+                    }else{
+                        i++;
+                    }
+                    
+                }//if id not found nothing happens
+                break;  
+                
+            case PARENT:
+                while(!parents[i-1].equals(null)){
+                    if(parents[i].ID.equals(ID)){
+                        System.out.println("User found and deleted");
+                        parents[i] = null;
+                        Parent placeholder = new Parent();
+                        while(!parents[i+1].equals(null)){//This while loop shifts the empty element to the end of the array
+                            placeholder = parents[i];
+                            parents[i] = parents[i+1];
+                            parents[i+1] = placeholder;
+                            i++;
+                        }
+                        break;
+                    }else{
+                        i++;
+                    }
+                    
+                }
+                
+                break; 
+        }
+                
+    }
+    
+    
+    void LinkAccounts(String ID1, String ID2){
+        PrintWriter writer = new PrintWriter("linkedAccounts.txt", "UTF-8");
+        writer.println(ID1+"+"+ID2+ "," +ID2+"+"+ID1);
+        writer.close();
+        System.out.print("Linked!");
+    }
+    
+    
+    void editAccount(String ID){
+        //i actually dont know what editing there will be
+}
+    
+    
+}
+    
