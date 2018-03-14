@@ -1,1 +1,1 @@
-# Admin
+# Administrator Class
